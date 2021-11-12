@@ -50,6 +50,35 @@ class Tablero():
                 self.gameState[(x - 1) % self.nxC, (y + 1)  % self.nyC] + \
                 self.gameState[(x)     % self.nxC, (y + 1)  % self.nyC] + \
                 self.gameState[(x + 1) % self.nxC, (y + 1)  % self.nyC]
+    
+    def getPolygon(self,x,y):
+        # Calculamos el polígono que forma la celda.
+        return [((x)*self.dimCW, y*self.dimCH),((x+1)*self.dimCW,y*self.dimCH),((x+1)*self.dimCW, (y+1)*self.dimCH), ((x)*self.dimCW, (y+1) * self.dimCH)]
+    
+    def colorCell(self,x,y, state):
+        # Calculamos el polígono que forma la celda.
+        poly = self.getPolygon(x,y)
+        
+        # Si la celda está "muerta" pintamos un recuadro con borde gris
+        if state == 0:
+            self.game.draw.polygon(self.screen, (40, 40, 40), poly, 1)
+            return
+        
+        # Si la celda está "viva" pintamos un recuadro relleno de color
+        self.game.draw.polygon(self.screen, (255, 200, 100), poly, 0)
+        
+    def applyRules(self, x, y):
+        # Calculamos el número de vecinos cercanos.
+        num_neighbours = self.calculate_neighbours(x, y)
+        
+        # Regla #1 : Una celda muerta con exactamente 3 vecinas vivas, "revive".
+        if self.gameState[x, y] == 0 and num_neighbours == 3:
+            return 1
+        # Regla #2 : Una celda viva con menos de 2 o 3 vecinas vinas, "muere".
+        if self.gameState[x, y] == 1 and (num_neighbours < 2 or num_neighbours > 3):
+            return 0 
+        
+        return None
 
 class GameOfLife():
     def __init__ (self):
@@ -109,36 +138,41 @@ class GameOfLife():
             
 
     def actualizateGameState(self):
-        tmpGameState = np.copy(self.tablero.gameState) #Creamos una varible temporal que almacene el estado de juego actual
-        for y in range(0, self.tablero.nxC): #### Paralelizar
-            for x in range (0, self.tablero.nyC): #### Paralizar
-                if not self.pauseExect:
-                    # Calculamos el número de vecinos cercanos.
-                    ##### PARALELIZAR ---------------------------------------------------------------------
-                    num_neighbours = self.tablero.calculate_neighbours(x, y)
-                    ##### Paralelizar --------------------------------------------------------------------            
-                    # Regla #1 : Una celda muerta con exactamente 3 vecinas vivas, "revive".
-                    if self.tablero.gameState[x, y] == 0 and num_neighbours == 3:
-                        tmpGameState[x, y] = 1
-                    # Regla #2 : Una celda viva con menos de 2 o 3 vecinas vinas, "muere".
-                    elif self.tablero.gameState[x, y] == 1 and (num_neighbours < 2 or num_neighbours > 3):
-                        tmpGameState[x, y] = 0 
-                    
-                # Calculamos el polígono que forma la celda.
-                poly = [((x)   * self.tablero.dimCW, y * self.tablero.dimCH),
-                        ((x+1) * self.tablero.dimCW, y * self.tablero.dimCH),
-                        ((x+1) * self.tablero.dimCW, (y+1) * self.tablero.dimCH),
-                        ((x)   * self.tablero.dimCW, (y+1) * self.tablero.dimCH)]
+        
+         #Creamos una varible temporal que almacene el estado temporal de juego actual
+        tmpGameState = np.copy(self.tablero.gameState)
+        
+        # Recorremos las celdas en verticalmente
+        #### Paralelizar------------------
+        for y in range(0, self.tablero.nxC): 
+            # Recorremos las celdas en horizontalemente
+            #### Paralizar------------------
+            for x in range (0, self.tablero.nyC):
                 
-                # Si la celda está "muerta" pintamos un recuadro con borde gris
-                if tmpGameState[x, y] == 0:
-                    self.tablero.game.draw.polygon(self.tablero.screen, (40, 40, 40), poly, 1)
+                #Si el juego no esta en pausa
+                if not self.pauseExect:    
+                                    
+                    ### APLICAMOS LAS REGLAS
                     
-            # Si la celda está "viva" pintamos un recuadro relleno de color
-                else:
-                    self.tablero.game.draw.polygon(self.tablero.screen, (255, 200, 100), poly, 0)
+                    state = self.tablero.applyRules(x,y)
+                    if (state != None):
+                        tmpGameState[x,y] = state
+                
+                #Coloreamos la celda    
+                self.tablero.colorCell(x, y, tmpGameState[x,y])
+           
+            #### ------------------        
+        #### ------------------  
                     
         return np.copy(tmpGameState)
+
+class Cell():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.state = None
+        
+    
 
 if __name__ == '__main__':
     
