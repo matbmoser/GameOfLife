@@ -112,7 +112,7 @@ class Cell():
         # Calculamos el polígono que forma la celda.
         return [((self.x)*self.dimCW, self.y*self.dimCH),((self.x+1)*self.dimCW,self.y*self.dimCH),((self.x+1)*self.dimCW, (self.y+1)*self.dimCH), ((self.x)*self.dimCW, (self.y+1) * self.dimCH)]  
 
-class GameOfLife():
+class SecuentialGameOfLife():
     def __init__ (self):
         #Almacena los datos del tablero
         self.tablero = Tablero() 
@@ -120,15 +120,18 @@ class GameOfLife():
         self.pauseExect = False
         #Indica cuando el juego debe cerrarse
         self.finish = False
-    
-    def start(self, width, height, nxC, nyC):
+        
+        self.epochs = 0
+        self.counter = 0
+
+    def start(self, width, height, nxC, nyC, epochs=0):
         
         # Pasamos los parámetros al tablero para abrir
+        self.epochs = epochs
         self.tablero.open_display(width=width,height=height,nxC=nxC,nyC=nyC)
+        self.counter = 0
         
         while(True):
-            # Ralentizamos la ejecución a 0.1 segundos
-            time.sleep(0.1)
             
             # Limpiamos la pantalla
             self.tablero.clear_display()
@@ -145,9 +148,15 @@ class GameOfLife():
             self.tablero.display.flip()   
 
     def checkStatus(self):
+        
+        if self.counter >= self.epochs:
+            self.finish = True
+            return
+            
+        self.counter+=1
         # Registramos eventos de teclado y ratón.
         ev = self.tablero.game.event.get()
-
+    
         # PARALELIZAR -----------------------------
         for event in ev:
             
@@ -208,24 +217,4 @@ class GameOfLife():
   
         
     
-
-if __name__ == '__main__':
-    
-    juego = GameOfLife()
-    
-    # Parámetros del Tablero:
-    
-    #Tamaño de la ventana del tablero 
-    width = 800
-    height = 800
-    
-    #Número de celdas en el eje X
-    nxC = 100
-    #Número de celdas en el eje Y
-    nyC = 100
-    
-    #Empezamos el juego
-    juego.start(width=width, height=height, nxC=nxC, nyC=nyC)
-    
-
 
