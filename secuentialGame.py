@@ -6,7 +6,6 @@ from numba.np.ufunc import parallel
 import pygame
 import numpy as np
 from pygame import draw
-from secuentialGameOfLife import SecuentialGameOfLife
 import time
 from numba import set_num_threads
 from timeit import default_timer as timer
@@ -45,11 +44,11 @@ def open_display(w=400,h=400,nx=60,ny=60):
     #Definimos los parámetros para el display
     width = w
     height = h
-    #screen = pygame.display.set_mode((height, width))
-    #screen.fill(background)
+    screen = pygame.display.set_mode((height, width))
+    screen.fill(background)
     
     # Personalizamos la ventana 
-    #pygame.display.set_caption("Horton's Game of Life: Mathias Moser y Rafael Camarero")
+    pygame.display.set_caption("Horton's Game of Life: Mathias Moser y Rafael Camarero")
     
     #Numero de Celdas en cada eje
     nxC, nyC = nx, ny
@@ -86,7 +85,7 @@ def getPolygon(x,y):
 
 
 def startGame(w, h, nx, ny, epoch=0):
-    #pygame.init()
+    pygame.init()
     global gameState, epochs, counter
     # Pasamos los parámetros al tablero para abrir
     epochs = epoch
@@ -97,7 +96,7 @@ def startGame(w, h, nx, ny, epoch=0):
         
         
         # Limpiamos la pantalla
-        #clear_display()
+        clear_display()
         
         checkStatus()
         
@@ -108,7 +107,7 @@ def startGame(w, h, nx, ny, epoch=0):
         updateGameState()
 
         # Mostramos el resultado
-        #pygame.display.flip()  
+        pygame.display.flip()  
          
 def checkStatus():
     global finish, pauseExect, counter, epochs
@@ -118,7 +117,7 @@ def checkStatus():
         
     counter+=1
     # Registramos eventos de teclado y ratón.
-    """
+    
     ev = pygame.event.get()
 
     # PARALELIZAR -----------------------------
@@ -143,7 +142,7 @@ def checkStatus():
                 if mods & pygame.KMOD_CTRL:
                     print("GameOfLife Closed!")
                     finish = True
-        """
+        
 
 def updateGameState():
     global gameState, nxC, tmpGame
@@ -185,9 +184,9 @@ def vertical(y, tmpGame):
                     tmpGame[x,y] = 0 
 
             # Calculamos el polígono que forma la celda.
-            #poly = getPolygon(x,y)
+            poly = getPolygon(x,y)
             
-            #paint(poly,tmpGame[x,y])
+            paint(poly,tmpGame[x,y])
                 
     return tmpGame    
 
@@ -195,11 +194,11 @@ def paint(poly, state):
     global screen
         # Si la celda está "muerta" pintamos un recuadro con borde gris
     if state == 0:
-        #pygame.draw.polygon(screen, (40, 40, 40), poly, 1)
+        pygame.draw.polygon(screen, (40, 40, 40), poly, 1)
         return
     
     # Si la celda está "viva" pintamos un recuadro relleno de color
-    #pygame.draw.polygon(screen, (255, 200, 100), poly, 0)  
+    pygame.draw.polygon(screen, (255, 200, 100), poly, 0)  
 
 
 
@@ -216,7 +215,7 @@ if __name__ == '__main__':
     #Número de celdas en el eje Y
     nyC = 100
 
-    epochs = 25
+    epochs = 100
     
 
     #Empezamos el juego Paralelo
