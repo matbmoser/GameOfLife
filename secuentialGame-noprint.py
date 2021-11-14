@@ -66,7 +66,6 @@ def generate_random_board():
     global nxC, nyC
     return np.random.randint(2, size=(nxC, nyC))
 
-@njit()
 def calculate_neighbours(x, y):
     global gameState,nxC, nyC
     # Calcula el número de elementos alrededor sumando las posiciones
@@ -79,7 +78,6 @@ def calculate_neighbours(x, y):
             gameState[(x)     % nxC, (y + 1)  % nyC] + \
             gameState[(x + 1) % nxC, (y + 1)  % nyC]
 
-@njit()
 def getPolygon(x,y):
     global dimCH, dimCW
     # Calculamos el polígono que forma la celda.
@@ -144,7 +142,7 @@ def checkStatus():
                 if mods & pygame.KMOD_CTRL:
                     print("GameOfLife Closed!")
                     finish = True
-    """
+        """
 
 def updateGameState():
     global gameState, nxC, tmpGame
@@ -164,7 +162,7 @@ def updateGameState():
                 
 
 
-@jit()
+
 def vertical(y, tmpGame):
     global nyC, pauseExect,gameState, screen
     for x in range (0, nyC):
@@ -196,20 +194,16 @@ def paint(poly, state):
     global screen
         # Si la celda está "muerta" pintamos un recuadro con borde gris
     if state == 0:
-        pygame.draw.polygon(screen, (40, 40, 40), poly, 1)
+        #pygame.draw.polygon(screen, (40, 40, 40), poly, 1)
         return
     
     # Si la celda está "viva" pintamos un recuadro relleno de color
-    pygame.draw.polygon(screen, (255, 200, 100), poly, 0)  
+    #pygame.draw.polygon(screen, (255, 200, 100), poly, 0)  
 
 
 
 if __name__ == '__main__':
-    
-    num_threads = input(f'Enter max number of cores to use: ')
 
-    set_num_threads(int(num_threads))   
-    
     # Parámetros del Tablero:
     
     #Tamaño de la ventana del tablero 
@@ -217,15 +211,17 @@ if __name__ == '__main__':
     height = 800
     
     #Número de celdas en el eje X
-    nxC = 200
+    nxC = 100
     #Número de celdas en el eje Y
-    nyC = 200
+    nyC = 100
 
-    epochs = 100
+    epochs = 25
     
-    
+
     #Empezamos el juego Paralelo
     start = timer()
     startGame(w=width, h=height, nx=nxC, ny=nyC, epoch=epochs)
     end = timer()
-    print("Tiempo Paralelo: [{0}]".format(end-start))
+    print("Tiempo Secuencial: [{0}]".format(end-start))
+    
+
