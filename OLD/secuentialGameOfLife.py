@@ -125,7 +125,7 @@ class SecuentialGameOfLife():
         self.counter = 0
 
     def start(self, width, height, nxC, nyC, epochs=0):
-        
+        pygame.init()
         # Pasamos los parámetros al tablero para abrir
         self.epochs = epochs
         self.tablero.open_display(width=width,height=height,nxC=nxC,nyC=nyC)
