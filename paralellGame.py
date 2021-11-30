@@ -1,4 +1,4 @@
-
+import pyperclip
 # to measure exec time
 from numba import njit, prange, set_num_threads, jit,int32, float32, boolean   # import the types
 from numba.experimental import jitclass
@@ -217,15 +217,17 @@ if __name__ == '__main__':
     height = 800
     
     #Número de celdas en el eje X
-    nxC = 200
+    nxC = 100
     #Número de celdas en el eje Y
-    nyC = 200
+    nyC = 100
 
-    epochs = 100
+    epochs = 25
     
     
     #Empezamos el juego Paralelo
     start = timer()
     startGame(w=width, h=height, nx=nxC, ny=nyC, epoch=epochs)
     end = timer()
-    print("Tiempo Paralelo: [{0}]".format(end-start))
+    finalTime = end-start
+    print("Tiempo Paralelo: [{0}]".format(finalTime))
+    pyperclip.copy(finalTime)

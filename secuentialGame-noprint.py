@@ -215,7 +215,7 @@ if __name__ == '__main__':
     #Número de celdas en el eje Y
     nyC = 100
 
-    epochs = 25
+    epochs = 250
     
 
     #Empezamos el juego Paralelo
