@@ -51,7 +51,7 @@
 
 ## Important
 
-If you want to print the board of the GameOfLife use the ```secuentialGame.py``` file, all the files that contain ```-noprint``` have no grafical interface and give only the time of the execution.
+If you want to print the board of the GameOfLife use the ```sequentialGame.py``` file, all the files that contain ```-noprint``` have no grafical interface and give only the time of the execution.
 
 
 ### Built With
@@ -105,7 +105,7 @@ For mor information check: https://developer.nvidia.com/cuda-python
 
 3. If you want to execute with MPI do:
    ```sh
-    mpiexec -cores <numofcores> python .\paralellGameMPI.py 
+    mpiexec -cores <numofcores> python .\parallelGameMPI.py 
    ```
    You can choose the number of cores to by changing numofcores to 2 for example
 
