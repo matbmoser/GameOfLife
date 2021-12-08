@@ -88,7 +88,7 @@ If you have a NVIDIA GPU you shall install CUDA Toolkit: https://developer.nvidi
   python -m pip install numba
   ```  
 
-For mor information check: https://developer.nvidia.com/cuda-python
+For more information check: https://developer.nvidia.com/cuda-python
 
 ### Installation
 
