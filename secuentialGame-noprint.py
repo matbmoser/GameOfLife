@@ -1,13 +1,6 @@
 
 # to measure exec time
-from numba import njit, prange, set_num_threads, jit,int32, float32, boolean   # import the types
-from numba.experimental import jitclass
-from numba.np.ufunc import parallel
-import pygame
 import numpy as np
-from pygame import draw
-import time
-from numba import set_num_threads
 from timeit import default_timer as timer
 
 
@@ -31,12 +24,6 @@ dimCW = 0
 dimCH = 0
 
 
-
-def clear_display():
-    global screen,background
-    screen.fill(background) 
-      
-
 def open_display(w=400,h=400,nx=60,ny=60):
     
     global background,gameState,screen
@@ -44,11 +31,6 @@ def open_display(w=400,h=400,nx=60,ny=60):
     #Definimos los parámetros para el display
     width = w
     height = h
-    #screen = pygame.display.set_mode((height, width))
-    #screen.fill(background)
-    
-    # Personalizamos la ventana 
-    #pygame.display.set_caption("Horton's Game of Life: Mathias Moser y Rafael Camarero")
     
     #Numero de Celdas en cada eje
     nxC, nyC = nx, ny
@@ -78,11 +60,6 @@ def calculate_neighbours(x, y):
             gameState[(x)     % nxC, (y + 1)  % nyC] + \
             gameState[(x + 1) % nxC, (y + 1)  % nyC]
 
-def getPolygon(x,y):
-    global dimCH, dimCW
-    # Calculamos el polígono que forma la celda.
-    return [((x)*dimCW, y*dimCH),((x+1)*dimCW,y*dimCH),((x+1)*dimCW, (y+1)*dimCH), ((x)*dimCW, (y+1) * dimCH)]   
-
 
 def startGame(w, h, nx, ny, epoch=0):
     #pygame.init()
@@ -95,9 +72,6 @@ def startGame(w, h, nx, ny, epoch=0):
     while(True):
         
         
-        # Limpiamos la pantalla
-        #clear_display()
-        
         checkStatus()
         
         #Si precionamos el botón de cerrar o CTRL-Z
@@ -106,8 +80,6 @@ def startGame(w, h, nx, ny, epoch=0):
         
         updateGameState()
 
-        # Mostramos el resultado
-        #pygame.display.flip()  
          
 def checkStatus():
     global finish, pauseExect, counter, epochs
@@ -116,33 +88,6 @@ def checkStatus():
         return
         
     counter+=1
-    # Registramos eventos de teclado y ratón.
-    """
-    ev = pygame.event.get()
-
-    # PARALELIZAR -----------------------------
-    for event in ev:
-        
-        #Si damos a cerrar se cierra el tablero
-        if event.type == pygame.QUIT:
-            print("GameOfLife Closed!")
-            finish = True
-            return
-        
-        # Detectamos si se presiona una tecla.
-        if event.type == pygame.KEYDOWN:
-            
-            #En el caso de que la tecla sea escape o ESC pausamos el juego
-            if event.key == pygame.K_ESCAPE or event.key == pygame.K_SPACE:
-                pauseExect = not pauseExect
-
-            #En el caso que ta tecla sea CTRL + Z cerramos el juego
-            elif event.key == pygame.K_z:
-                mods = pygame.key.get_mods()
-                if mods & pygame.KMOD_CTRL:
-                    print("GameOfLife Closed!")
-                    finish = True
-        """
 
 def updateGameState():
     global gameState, nxC, tmpGame
@@ -160,8 +105,6 @@ def updateGameState():
     
     gameState = tmpGame
                 
-
-
 
 def vertical(y, tmpGame):
     global nyC, pauseExect,gameState, screen
@@ -184,23 +127,8 @@ def vertical(y, tmpGame):
                     tmpGame[x,y] = 0 
 
             # Calculamos el polígono que forma la celda.
-            #poly = getPolygon(x,y)
-            
-            #paint(poly,tmpGame[x,y])
                 
     return tmpGame    
-
-def paint(poly, state):
-    global screen
-        # Si la celda está "muerta" pintamos un recuadro con borde gris
-    if state == 0:
-        #pygame.draw.polygon(screen, (40, 40, 40), poly, 1)
-        return
-    
-    # Si la celda está "viva" pintamos un recuadro relleno de color
-    #pygame.draw.polygon(screen, (255, 200, 100), poly, 0)  
-
-
 
 if __name__ == '__main__':
 
@@ -218,7 +146,7 @@ if __name__ == '__main__':
     epochs = 250
     
 
-    #Empezamos el juego Paralelo
+    #Empezamos el juego Secuencial
     start = timer()
     startGame(w=width, h=height, nx=nxC, ny=nyC, epoch=epochs)
     end = timer()

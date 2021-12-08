@@ -1,6 +1,4 @@
 from mpi4py import MPI
-import pyperclip
-import mpi4py
 import numpy as np
 import time
 from timeit import default_timer as timer
@@ -204,15 +202,14 @@ if __name__ == '__main__':
 
     epochs = 100
     
-    #Empezamos el juego Paralelo
     if rank == 0:
         start = timer()
 
+    # Empezamos el juego
     startGame(w=width, h=height, nx=nxC, ny=nyC, epoch=epochs)
     
     if rank == 0:
         end = timer()
         finalTime = end-start
         print("Tiempo Paralelo: [{0}]".format(finalTime))
-        pyperclip.copy(finalTime)
         
