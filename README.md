@@ -114,7 +114,7 @@ For mor information check: https://developer.nvidia.com/cuda-python
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE.md` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -142,7 +142,7 @@ Project Link: [https://github.com/matbmoser/GameOfLife](https://github.com/matbm
 [issues-shield]: https://img.shields.io/github/issues/matbmoser/GameOfLife.svg?style=for-the-badge
 [issues-url]: https://github.com/matbmoser/GameOfLife/issues
 [license-shield]: https://img.shields.io/github/license/matbmoser/GameOfLife.svg?style=for-the-badge
-[license-url]: https://github.com/matbmoser/GameOfLife/blob/master/LICENSE.txt
+[license-url]: https://github.com/matbmoser/GameOfLife/blob/master/LICENSE.md
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/mathias-brunkow-moser
 [product-screenshot]: images/screenshot.png
