@@ -188,8 +188,7 @@ def vertical(y, tmpGame):
             # Calculamos el polígono que forma la celda.
             #poly = getPolygon(x,y)
             
-            #paint(poly,tmpGame[x,y])
-                
+            #paint(poly,tmpGame[x,y])           
     return tmpGame    
 
 def paint(poly, state):

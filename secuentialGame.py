@@ -1,13 +1,6 @@
 
-# to measure exec time
-from numba import njit, prange, set_num_threads, jit,int32, float32, boolean   # import the types
-from numba.experimental import jitclass
-from numba.np.ufunc import parallel
 import pygame
 import numpy as np
-from pygame import draw
-import time
-from numba import set_num_threads
 from timeit import default_timer as timer
 
 
@@ -31,12 +24,12 @@ dimCW = 0
 dimCH = 0
 
 
-
+# Limpia la pantalla
 def clear_display():
     global screen,background
     screen.fill(background) 
       
-
+# Condigura el display del juego
 def open_display(w=400,h=400,nx=60,ny=60):
     
     global background,gameState,screen
@@ -68,7 +61,7 @@ def generate_random_board():
 
 def calculate_neighbours(x, y):
     global gameState,nxC, nyC
-    # Calcula el número de elementos alrededor sumando las posiciones
+    # Calcula el número de elementos vivos alrededor sumando las posiciones
     return gameState[(x - 1) % nxC, (y - 1)  % nyC] + \
             gameState[(x)     % nxC, (y - 1)  % nyC] + \
             gameState[(x + 1) % nxC, (y - 1)  % nyC] + \
@@ -78,12 +71,13 @@ def calculate_neighbours(x, y):
             gameState[(x)     % nxC, (y + 1)  % nyC] + \
             gameState[(x + 1) % nxC, (y + 1)  % nyC]
 
+# Recoje las dimensiones del poligono alrededor de una celda
 def getPolygon(x,y):
     global dimCH, dimCW
     # Calculamos el polígono que forma la celda.
     return [((x)*dimCW, y*dimCH),((x+1)*dimCW,y*dimCH),((x+1)*dimCW, (y+1)*dimCH), ((x)*dimCW, (y+1) * dimCH)]   
 
-
+# Empieza el juego
 def startGame(w, h, nx, ny, epoch=0):
     pygame.init()
     global gameState, epochs, counter
@@ -107,7 +101,8 @@ def startGame(w, h, nx, ny, epoch=0):
 
         # Mostramos el resultado
         pygame.display.flip()  
-         
+
+# Verifica si la condición de parada se ha cumplido         
 def checkStatus():
     global finish, pauseExect, counter, epochs
     if counter >= epochs:
@@ -142,7 +137,7 @@ def checkStatus():
                     print("GameOfLife Closed!")
                     finish = True
         
-
+# Actualiza las celdas del juego
 def updateGameState():
     global gameState, nxC, tmpGame
     #Creamos una varible temporal que almacene el estado temporal de juego actual
@@ -161,7 +156,7 @@ def updateGameState():
                 
 
 
-
+# Recorre verticalemente cada fila
 def vertical(y, tmpGame):
     global nyC, pauseExect,gameState, screen
     for x in range (0, nyC):
@@ -189,6 +184,7 @@ def vertical(y, tmpGame):
                 
     return tmpGame    
 
+# Imprime el la celda en el tablero
 def paint(poly, state):
     global screen
         # Si la celda está "muerta" pintamos un recuadro con borde gris
@@ -214,10 +210,10 @@ if __name__ == '__main__':
     #Número de celdas en el eje Y
     nyC = 100
 
-    epochs = 250
+    epochs = 500
     
 
-    #Empezamos el juego Paralelo
+    #Empezamos el juego Secuencial
     start = timer()
     startGame(w=width, h=height, nx=nxC, ny=nyC, epoch=epochs)
     end = timer()
