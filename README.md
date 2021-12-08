@@ -19,7 +19,7 @@
 -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
+[![Tags][tags-shield]][tags-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
@@ -137,8 +137,8 @@ Project Link: [https://github.com/matbmoser/GameOfLife](https://github.com/matbm
 [contributors-url]: https://github.com/matbmoser/GameOfLife/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/matbmoser/GameOfLife.svg?style=for-the-badge
 [forks-url]: https://github.com/github_username/GameOfLife/network/members
-[stars-shield]: https://img.shields.io/github/stars/matbmoser/GameOfLife.svg?style=for-the-badge
-[stars-url]: https://github.com/matbmoser/GameOfLife/stargazers
+[tags-shield]: https://img.shields.io/github/v/tag/matbmoser/GameOfLife.svg?sort=semver&style=for-the-badge
+[tags-url]: https://github.com/matbmoser/GameOfLife/tags
 [issues-shield]: https://img.shields.io/github/issues/matbmoser/GameOfLife.svg?style=for-the-badge
 [issues-url]: https://github.com/matbmoser/GameOfLife/issues
 [license-shield]: https://img.shields.io/github/license/matbmoser/GameOfLife.svg?style=for-the-badge
