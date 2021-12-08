@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/matbmoser/GameOfLife">
-    <img src="images/logo.jpg" alt="Logo" width="800" height="300">
+    <img src="images/logo.jpg" alt="Logo" width="600" height="300">
   </a>
 
 <h3 align="center">Game Of Life</h3>
