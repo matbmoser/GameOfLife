@@ -107,7 +107,7 @@ For mor information check: https://developer.nvidia.com/cuda-python
    ```sh
     mpiexec -cores <numofcores> python .\parallelGameMPI.py 
    ```
-   You can choose the number of cores to by changing numofcores to 2 for example
+   You can choose the number of cores by changing numofcores to 2 for example
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
